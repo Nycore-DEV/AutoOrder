@@ -4,12 +4,6 @@
  * ==========================================
  */
 
-const {
-  default: makeWASocket,
-  useMultiFileAuthState,
-  fetchLatestBaileysVersion,
-  Browsers,
-} = require('@whiskeysockets/baileys');
 const pino = require('pino');
 const readline = require('readline');
 
@@ -33,6 +27,16 @@ function ask(question) {
 }
 
 async function startBot() {
+  // Baileys sekarang dipublikasikan sebagai ES Module, sedangkan project ini
+  // memakai CommonJS (require). Solusinya: import secara dinamis di sini.
+  const {
+    default: makeWASocket,
+    useMultiFileAuthState,
+    fetchLatestBaileysVersion,
+    Browsers,
+    DisconnectReason,
+  } = await import('@whiskeysockets/baileys');
+
   const { state, saveCreds } = await useMultiFileAuthState(config.bot.sessionPath);
   const { version } = await fetchLatestBaileysVersion();
 
@@ -48,7 +52,7 @@ async function startBot() {
   if (config.bot.usePairingCode && !sock.authState.creds.registered) {
     let phoneNumber = config.bot.pairingNumber.replace(/[^0-9]/g, '');
     if (!phoneNumber) {
-      phoneNumber = await ask('6287855074673');
+      phoneNumber = await ask('Masukkan nomor WhatsApp bot (contoh 628xxxxxxxxxx): ');
       phoneNumber = phoneNumber.replace(/[^0-9]/g, '');
     }
 
@@ -68,7 +72,7 @@ async function startBot() {
   sock.ev.on('creds.update', saveCreds);
 
   sock.ev.on('connection.update', (update) => {
-    handleConnectionUpdate(update, startBot);
+    handleConnectionUpdate(update, startBot, DisconnectReason);
 
     if (update.connection === 'open' && !webhookStarted) {
       startWebhookServer(sock);
