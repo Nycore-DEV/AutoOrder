@@ -30,11 +30,10 @@ module.exports = {
   owners: parseOwnerNumbers(process.env.OWNER_NUMBERS),
 
   xendit: {
-    apiKey: process.env.XENDIT_API_KEY || 'xnd_development_EXKZYMHngmENXS2C1PNHpgIa2WKhMaUb6WuP1Sw3n0AgWQSNXA1DJV0gA5Ssyf',
-    webhookToken: process.env.XENDIT_WEBHOOK_TOKEN || '7Z4FHKWyk5l9zVxVwru1PLr5ByVhh34Be4R2Z13i0JP0HdUK',
-    merchantCode: process.env.XENDIT_MERCHANT_CODE || '',
-    callbackUrl: process.env.XENDIT_CALLBACK_URL || '',
-  },
+  apiKey: process.env.XENDIT_API_KEY || '',
+  webhookToken: process.env.XENDIT_WEBHOOK_TOKEN || '',
+  callbackUrl: process.env.XENDIT_CALLBACK_URL || '',
+},
 
   server: {
     port: parseInt(process.env.PORT || '3000', 10),
