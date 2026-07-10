@@ -1,7 +1,6 @@
-const { DisconnectReason } = require('@whiskeysockets/baileys');
 const logger = require('../utils/logger');
 
-function handleConnectionUpdate(update, startBot) {
+function handleConnectionUpdate(update, startBot, DisconnectReason) {
   const { connection, lastDisconnect } = update;
 
   if (connection === 'close') {
