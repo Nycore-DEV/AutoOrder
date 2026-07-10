@@ -1,0 +1,5 @@
+# Jaring pengaman: pastikan Python & build tools tersedia
+# supaya better-sqlite3 tetap bisa dikompilasi manual (node-gyp)
+# kalau prebuilt binary untuk versi Node yang dipakai tidak ditemukan.
+[phases.setup]
+nixPkgs = ["nodejs_20", "python3", "gcc", "gnumake"]
