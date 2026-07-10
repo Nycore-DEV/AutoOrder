@@ -1,4 +1,3 @@
-const { downloadMediaMessage } = require('@whiskeysockets/baileys');
 const { isOwner } = require('../utils/helpers');
 const { restockProduct, formatFileSize } = require('../products/productManager');
 const logger = require('../utils/logger');
@@ -8,6 +7,9 @@ const logger = require('../utils/logger');
  * Owner mengirim file lalu me-reply file tersebut dengan "/restock".
  */
 async function handleRestock(sock, msg) {
+  // Baileys adalah ES Module, jadi diimpor secara dinamis di sini.
+  const { downloadMediaMessage } = await import('@whiskeysockets/baileys');
+
   const jid = msg.key.remoteJid;
   const sender = msg.key.participant || msg.key.remoteJid;
 
